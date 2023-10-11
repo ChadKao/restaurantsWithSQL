@@ -1,14 +1,19 @@
 const express = require('express');
 const app = express();
 const port = 3000;
-
+const db = require('./models')
+const Restaurant = db.Restaurant;
 
 app.get('/', (req, res) => {
   res.redirect('/restaurants')
 });
 
 app.get('/restaurants', (req, res) => {
-  res.send('restaurants')
+  Restaurant.findAll()
+    .then(restaurants => {
+      res.send({ restaurants })
+    })
+    .catch(err => console.log(err))
 })
 
 app.get('/restaurants/:id', (req, res) => {
