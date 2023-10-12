@@ -3,6 +3,11 @@ const app = express();
 const port = 3000;
 const db = require('./models')
 const Restaurant = db.Restaurant;
+const { engine } = require('express-handlebars');
+
+app.engine('.hbs', engine({ extname: '.hbs' }));
+app.set('view engine', '.hbs');
+app.set('views', './views');
 
 app.get('/', (req, res) => {
   res.redirect('/restaurants')
