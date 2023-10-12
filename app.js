@@ -5,6 +5,7 @@ const db = require('./models')
 const Restaurant = db.Restaurant;
 const { engine } = require('express-handlebars');
 
+
 app.engine('.hbs', engine({ extname: '.hbs' }));
 app.set('view engine', '.hbs');
 app.set('views', './views');
@@ -16,17 +17,38 @@ app.get('/', (req, res) => {
 });
 
 app.get('/restaurants', (req, res) => {
-  Restaurant.findAll()
+  Restaurant.findAll({
+    attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description'],
+    raw: true
+  })
     .then(restaurants => {
-      res.send({ restaurants })
+      const keyword = req.query.keyword?.trim()
+      const matchedRestaurants = keyword ? restaurants.filter(restaurant =>
+        Object.values(restaurant).some(property => {
+          if (typeof property === 'string') {
+            return property.toLowerCase().includes(keyword.toLowerCase())
+          } else {
+            return false
+          }
+        })) : restaurants
+      res.render('index', { restaurants: matchedRestaurants, keyword })
     })
     .catch(err => console.log(err))
 })
 
 app.get('/restaurants/:id', (req, res) => {
   const id = req.params.id;
-  res.send(`restaurants/${id}`)
+  console.log(id);
+  
+  Restaurant.findByPk(id, {
+    attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description'],
+    raw: true
+  })
+    .then(restaurant => res.render('show', { restaurant }))
+    .catch(err => console.log(err))
 })
+
+
 
 app.get('/restaurants/new', (req, res) => {
   res.send('restaurants/new')
