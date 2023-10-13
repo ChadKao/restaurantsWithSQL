@@ -1,0 +1,82 @@
+<link rel="stylesheet" href="/stylesheets/show.css" />
+<h1 class="mb-1 restaurant-show-title">編輯餐廳</h1>
+
+<div class="col-md-8 mx-auto mt-3 mb-5 shadow p-3 mb-5 bg-body rounded">
+  <form action="/restaurants/{{restaurant.id}}?_method=PUT" method="post" id="form">
+    <!-- Name -->
+    <div class="row mb-3">
+      <label class="col-sm-2 col-form-label">Name</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" name="name" value="{{restaurant.name}}" />
+      </div>
+    </div>
+
+    <!-- Name (English) -->
+    <div class="row mb-3">
+      <label class="col-sm-2 col-form-label">Name (English)</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" name="name_en" value="{{restaurant.name_en}}" />
+      </div>
+    </div>
+
+    <!-- Category -->
+    <div class="row mb-3">
+      <label class="col-sm-2 col-form-label">Category</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" name="category" value="{{restaurant.category}}" />
+      </div>
+    </div>
+
+    <!-- Image -->
+    <div class="row mb-3">
+      <label class="col-sm-2 col-form-label">Image</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" name="image" value="{{restaurant.image}}" />
+      </div>
+    </div>
+
+    <!-- Location -->
+    <div class="row mb-3">
+      <label class="col-sm-2 col-form-label">Location</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" name="location" value="{{restaurant.location}}" />
+      </div>
+    </div>
+
+    <!-- Phone -->
+    <div class="row mb-3">
+      <label class="col-sm-2 col-form-label">Phone</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" name="phone" value="{{restaurant.phone}}" />
+      </div>
+    </div>
+
+    <!-- Google Map -->
+    <div class="row mb-3">
+      <label class="col-sm-2 col-form-label">Google Map</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" name="google_map" value="{{restaurant.google_map}}" />
+      </div>
+    </div>
+
+    <!-- Rating -->
+    <div class="row mb-3">
+      <label class="col-sm-2 col-form-label">Rating</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" name="rating" value="{{restaurant.rating}}" />
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div class="row mb-3">
+      <label class="col-sm-2 col-form-label">Description</label>
+      <div class="col-sm-10">
+        <textarea class="form-control" name="description">{{restaurant.description}}</textarea>
+      </div>
+    </div>
+
+    <div class="col-md-12 text-center">
+      <button type="submit" class="btn btn-primary" id="submitButton">儲存</button>
+    </div>
+  </form>
+</div>

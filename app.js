@@ -4,6 +4,7 @@ const port = 3000;
 const db = require('./models')
 const Restaurant = db.Restaurant;
 const { engine } = require('express-handlebars');
+const methodOverride = require('method-override')
 
 
 app.engine('.hbs', engine({ extname: '.hbs' }));
@@ -11,6 +12,7 @@ app.set('view engine', '.hbs');
 app.set('views', './views');
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
+app.use(methodOverride('_method'))
 
 
 app.get('/', (req, res) => {
@@ -37,17 +39,12 @@ app.get('/restaurants', (req, res) => {
     .catch(err => console.log(err))
 })
 
-app.get('/restaurants/newtest', (req, res) => {
-  res.render('newtest')
-})
-
 app.get('/restaurants/new', (req, res) => {
   res.render('new')
 })
 
 app.get('/restaurants/:id', (req, res) => {
   const id = req.params.id;
-  console.log(id);
 
   Restaurant.findByPk(id, {
     attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description'],
@@ -65,14 +62,20 @@ app.post('/restaurants', (req, res) => {
 
 app.get('/restaurants/:id/edit', (req, res) => {
   const id = req.params.id;
-  res.send(`restaurants/${id}/edit`)
+  Restaurant.findByPk(id, {
+    attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description'],
+    raw: true
+  })
+    .then((restaurant) => res.render('edit', { restaurant }))
+    .catch(err => console.log(err))
 })
 
 app.put('/restaurants/:id', (req, res) => {
   const id = req.params.id;
-  res.send(`restaurants/${id}`)
-})
-
+  Restaurant.update(req.body, { where: { id } })
+    .then(() => res.redirect(`/restaurants/${id}`))
+    .catch(err => console.log(err))
+  })
 
 app.delete('/restaurants/:id', (req, res) => {
   const id = req.params.id;
