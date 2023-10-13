@@ -10,6 +10,7 @@ app.engine('.hbs', engine({ extname: '.hbs' }));
 app.set('view engine', '.hbs');
 app.set('views', './views');
 app.use(express.static('public'))
+app.use(express.urlencoded({ extended: true }))
 
 
 app.get('/', (req, res) => {
@@ -36,10 +37,18 @@ app.get('/restaurants', (req, res) => {
     .catch(err => console.log(err))
 })
 
+app.get('/restaurants/newtest', (req, res) => {
+  res.render('newtest')
+})
+
+app.get('/restaurants/new', (req, res) => {
+  res.render('new')
+})
+
 app.get('/restaurants/:id', (req, res) => {
   const id = req.params.id;
   console.log(id);
-  
+
   Restaurant.findByPk(id, {
     attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description'],
     raw: true
@@ -48,14 +57,10 @@ app.get('/restaurants/:id', (req, res) => {
     .catch(err => console.log(err))
 })
 
-
-
-app.get('/restaurants/new', (req, res) => {
-  res.send('restaurants/new')
-})
-  
 app.post('/restaurants', (req, res) => {
-  res.send('new restaurants')
+  Restaurant.create(req.body)
+    .then(() => res.redirect('/'))
+    .catch(err => console.log(err))
 })
 
 app.get('/restaurants/:id/edit', (req, res) => {

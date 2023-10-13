@@ -1,0 +1,75 @@
+<link rel="stylesheet" href="/stylesheets/show.css">
+<h1 class="mb-1 restaurant-show-title">新增餐廳</h1>
+
+
+<div class="col-md-8 mx-auto mt-3 mb-5 shadow p-3 mb-5 bg-body rounded">
+  <form action="/restaurants" method="post"  id="form">
+    <div class="row mb-3">
+      <label class="col-sm-2 col-form-label">Name</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" name="name">
+      </div>
+    </div>
+    
+    <div class="row mb-3">
+      <label class="col-sm-2 col-form-label">Name (English)</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" name="name_en">
+      </div>
+    </div>
+    
+    <div class="row mb-3">
+      <label class="col-sm-2 col-form-label">Category</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" name="category">
+      </div>
+    </div>
+    
+    <div class="row mb-3">
+      <label class="col-sm-2 col-form-label">Image</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" name="image">
+      </div>
+    </div>
+    
+    <div class="row mb-3">
+      <label class="col-sm-2 col-form-label">Location</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" name="location">
+      </div>
+    </div>
+    
+    <div class="row mb-3">
+      <label class="col-sm-2 col-form-label">Phone</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" name="phone">
+      </div>
+    </div>
+    
+    <div class="row mb-3">
+      <label class="col-sm-2 col-form-label">Google Map</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" name="google_map">
+      </div>
+    </div>
+    
+    <div class="row mb-3">
+      <label class="col-sm-2 col-form-label">Rating</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" name="rating">
+      </div>
+    </div>
+    
+    <div class="row mb-3">
+      <label class="col-sm-2 col-form-label">Description</label>
+      <div class="col-sm-10">
+        <textarea class="form-control" name="description"></textarea>
+      </div>
+    </div>
+
+     <div class="col-md-12 text-center">
+      <button type="submit" class="btn btn-primary" id="submitButton">Submit</button>
+    </div>
+  </form>
+</div>
+
