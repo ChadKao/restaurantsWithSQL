@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="/stylesheets/show.css">
+<link rel="stylesheet" href="/stylesheets/show.css" />
 
 <h1 class="mb-1 restaurant-show-title">{{restaurant.name}}</h1>
 <div class="container">
@@ -37,11 +37,14 @@
       </p>
 
       <img class="rounded mx-auto d-block mb-4 w-100" src="{{restaurant.image}}" alt="{{restaurant.name}}"
-        style="max-width: 600px;">
+        style="max-width: 600px;" />
     </div>
   </div>
 </div>
 
 <div class="col-md-12 text-center mb-3">
   <a href="/restaurants/{{restaurant.id}}/edit" class="btn btn-outline-primary" id="submitButton">編輯餐廳</a>
+  <form action="/restaurants/{{restaurant.id}}?_method=DELETE" method="POST" style="display: inline">
+    <button type="submit" class="btn btn-outline-danger">刪除餐廳</button>
+  </form>
 </div>

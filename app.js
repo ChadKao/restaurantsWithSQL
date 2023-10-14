@@ -79,11 +79,10 @@ app.put('/restaurants/:id', (req, res) => {
 
 app.delete('/restaurants/:id', (req, res) => {
   const id = req.params.id;
-  res.send(`restaurants/${id}deleted`)
+  Restaurant.destroy({ where: { id } })
+    .then(() => res.redirect('/'))
+    .catch(err => console.log(err))
 })
-
-
-
 
 app.listen(port, () => {
   console.log(`App listening at http://localhost:${port}`)
