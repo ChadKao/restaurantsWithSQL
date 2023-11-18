@@ -20,8 +20,22 @@ app.get('/', (req, res) => {
 });
 
 app.get('/restaurants', (req, res) => {
+  const sort = req.query.sort 
+
+  const sortOptions = {
+    ASC: [['name', 'ASC']],
+    DESC: [['name', 'DESC']],
+    category: [['category', 'ASC']],
+    location: [['location', 'ASC']],
+    rating_DESC: [['rating', 'DESC']],
+    rating_ASC: [['rating', 'ASC']],
+  };
+
+
+
   Restaurant.findAll({
     attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description'],
+    order: sortOptions[sort],
     raw: true
   })
     .then(restaurants => {

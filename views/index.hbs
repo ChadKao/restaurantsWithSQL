@@ -1,21 +1,41 @@
 <link href="/stylesheets/index.css" rel="stylesheet" />
 
 <!-- search bar -->
+
 <div class="container search-bar">
   <div class="search-bar-outer">
     <div class="search-bar-inner">
       <form action="/restaurants">
         <h4 class="mb-2">尋找餐廳：</h4>
-        <div class="input-group">
-          <input type="text" name="keyword" class="form-control" placeholder="輸入餐廳、分類" aria-label="Restaurant Name..."
-            value="{{keyword}}" aria-describedby="search-button" />
-          <div class="input-group-append">
-            <button class="btn btn-major" type="submit" id="search-button"><i class="fas fa-search"></i></button>
+        <div class="row">
+          <div class="col-sm-8">
+            <div class="input-group">
+              <input type="text" name="keyword" class="form-control" placeholder="輸入餐廳、分類"
+                aria-label="Restaurant Name..." value="{{keyword}}" aria-describedby="search-button" />
+              <div class="input-group-append">
+                <button class="btn btn-major" type="submit" id="search-button"><i class="fas fa-search"></i></button>
+              </div>
+            </div>
           </div>
+
+
+          <div class="col-sm-4">
+            <select name="sort" class="form-select" aria-label="Default select example" onchange="document.querySelector('form').submit()">
+              <option selected disabled hidden value="">選擇排序方式</option>
+              <option value="ASC">依名稱(A→Z)</option>
+              <option value="DESC">依名稱(Z→A)</option>
+              <option value="category">依類別</option>
+              <option value="location">依地區</option>
+              <option value="rating_DESC">依評分(高→低)</option>
+              <option value="rating_ASC">依評分(低→高)</option>
+            </select>
+          </div>
+          <input type="hidden" name="page" value="{{page}}" />
         </div>
       </form>
     </div>
   </div>
+
 </div>
 
 <!-- restaurant list -->
@@ -51,7 +71,6 @@
             </div>
           </div>
         </div>
-
 
         {{/each}}
       </div>
