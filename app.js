@@ -5,7 +5,9 @@ const db = require('./models')
 const Restaurant = db.Restaurant;
 const { engine } = require('express-handlebars');
 const methodOverride = require('method-override')
-
+const flash = require('connect-flash')
+const session = require('express-session')
+const messageHandler = require('./middlewares/message-handler')
 
 app.engine('.hbs', engine({ extname: '.hbs' }));
 app.set('view engine', '.hbs');
@@ -13,7 +15,13 @@ app.set('views', './views');
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
-
+app.use(session({
+  secret: 'ThisIsSecret',
+  resave: false,
+  saveUninitialized: false
+}))
+app.use(flash())
+app.use(messageHandler)
 
 app.get('/', (req, res) => {
   res.redirect('/restaurants')
@@ -70,7 +78,10 @@ app.get('/restaurants/:id', (req, res) => {
 
 app.post('/restaurants', (req, res) => {
   Restaurant.create(req.body)
-    .then(() => res.redirect('/'))
+    .then(() => {
+      req.flash('success', '新增成功!')
+      res.redirect('/restaurants')
+    })
     .catch(err => console.log(err))
 })
 
@@ -87,14 +98,20 @@ app.get('/restaurants/:id/edit', (req, res) => {
 app.put('/restaurants/:id', (req, res) => {
   const id = req.params.id;
   Restaurant.update(req.body, { where: { id } })
-    .then(() => res.redirect(`/restaurants/${id}`))
+    .then(() => {
+      req.flash('success', '修改成功!')
+      res.redirect(`/restaurants/${id}`)
+    })
     .catch(err => console.log(err))
   })
 
 app.delete('/restaurants/:id', (req, res) => {
   const id = req.params.id;
   Restaurant.destroy({ where: { id } })
-    .then(() => res.redirect('/'))
+    .then(() => {
+      req.flash('success', '刪除成功!')
+      res.redirect('/restaurants')
+    })
     .catch(err => console.log(err))
 })
 
