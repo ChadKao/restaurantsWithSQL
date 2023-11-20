@@ -7,6 +7,7 @@ const flash = require('connect-flash')
 const session = require('express-session')
 const messageHandler = require('./middlewares/message-handler');
 const router = require('./routes');
+const errorHandler = require('./middlewares/error-handler');
 
 app.engine('.hbs', engine({ extname: '.hbs' }));
 app.set('view engine', '.hbs');
@@ -22,6 +23,7 @@ app.use(session({
 app.use(flash())
 app.use(messageHandler)
 app.use(router)
+app.use(errorHandler)
 
 app.listen(port, () => {
   console.log(`App listening at http://localhost:${port}`)

@@ -52,13 +52,16 @@ router.get('/:id', (req, res) => {
     .catch(err => console.log(err))
 })
 
-router.post('/', (req, res) => {
+router.post('/', (req, res, next) => {
   Restaurant.create(req.body)
     .then(() => {
       req.flash('success', '新增成功!')
       res.redirect('/restaurants')
     })
-    .catch(err => console.log(err))
+    .catch((error) => {
+      error.errorMessage = '新增失敗'
+      next(error)
+    })
 })
 
 router.get('/:id/edit', (req, res) => {
@@ -71,24 +74,30 @@ router.get('/:id/edit', (req, res) => {
     .catch(err => console.log(err))
 })
 
-router.put('/:id', (req, res) => {
+router.put('/:id', (req, res, next) => {
   const id = req.params.id;
   Restaurant.update(req.body, { where: { id } })
     .then(() => {
       req.flash('success', '修改成功!')
       res.redirect(`/restaurants/${id}`)
     })
-    .catch(err => console.log(err))
+    .catch((error) => {
+      error.errorMessage = '修改失敗'
+      next(error)
+    })
 })
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', (req, res, next) => {
   const id = req.params.id;
   Restaurant.destroy({ where: { id } })
     .then(() => {
       req.flash('success', '刪除成功!')
       res.redirect('/restaurants')
     })
-    .catch(err => console.log(err))
+    .catch((error) => {
+      error.errorMessage = '刪除失敗'
+      next(error)
+    })
 })
 
 module.exports = router;
