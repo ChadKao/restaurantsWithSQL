@@ -30,7 +30,6 @@
               <option value="rating_ASC">依評分(低→高)</option>
             </select>
           </div>
-          <input type="hidden" name="page" value="{{page}}" />
         </div>
       </form>
     </div>
@@ -75,5 +74,21 @@
         {{/each}}
       </div>
     </div>
+  </div>
+</div>
+
+<div class="d-flex justify-content-center mb-3">
+  <div class="btn-group" role="group" aria-label="Basic outlined example">
+    <form action="/restaurants" method="GET" style="display: inline;">
+      <input type="hidden" name="page" value="{{ prev }}">
+      <button type="submit" class="btn btn-outline-primary">prev</button>
+    </form>
+
+    <span class="btn btn-primary">{{ page }}</span>
+
+    <form action="/restaurants" method="GET" style="display: inline;">
+      <input type="hidden" name="page" value="{{ next }}">
+      <button type="submit" class="btn btn-outline-primary">next</button>
+    </form>
   </div>
 </div>

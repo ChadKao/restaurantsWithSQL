@@ -15,15 +15,22 @@ router.get('/', (req, res) => {
     rating_ASC: [['rating', 'ASC']],
   };
 
+  const page = parseInt(req.query.page) || 1
+  const limit = 6
 
 
-  Restaurant.findAll({
+  Restaurant.findAndCountAll({
     attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description'],
     order: sortOptions[sort],
+    offset: (page - 1) * limit,
+    limit,
     raw: true
   })
-    .then( restaurants => {
+    .then(result => {
+      const restaurants = result.rows
+      const totalPage = Math.ceil(result.count / limit)      
       const keyword = req.query.keyword?.trim()
+
       const matchedRestaurants = keyword ? restaurants.filter(restaurant =>
         Object.values(restaurant).some(property => {
           if (typeof property === 'string') {
@@ -32,7 +39,14 @@ router.get('/', (req, res) => {
             return false
           }
         })) : restaurants
-      res.render('index', { restaurants: matchedRestaurants, keyword })
+
+      res.render('index', {
+        restaurants: matchedRestaurants,
+        keyword,
+        prev: page > 1 ? page - 1 : page,
+        next: page < totalPage ? page + 1 : page,
+        page
+      })
     })
     .catch(err => console.log(err))
 })
