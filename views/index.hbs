@@ -87,7 +87,7 @@
       <button type="submit" class="btn btn-outline-primary">prev</button>
     </form>
 
-    <span class="btn btn-primary">{{ page }}</span>
+    <span class="btn">page: {{ page }} of {{ totalPage }}</span>
 
     <form action="/restaurants" method="GET" style="display: inline;">
       <input type="hidden" name="page" value="{{ next }}">

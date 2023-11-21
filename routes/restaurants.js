@@ -48,7 +48,8 @@ router.get('/', (req, res) => {
         sort,
         prev: page > 1 ? page - 1 : page,
         next: page < totalPage ? page + 1 : page,
-        page
+        page,
+        totalPage
       })
     })
     .catch(err => console.log(err))
