@@ -2,9 +2,11 @@ const express = require('express');
 const router = express.Router();
 const db = require('../models')
 const Restaurant = db.Restaurant;
+const { Op } = require('sequelize');
+
 
 router.get('/', (req, res) => {
-  const sort = req.query.sort
+  const sort = req.query.sort 
 
   const sortOptions = {
     ASC: [['name', 'ASC']],
@@ -17,11 +19,21 @@ router.get('/', (req, res) => {
 
   const page = parseInt(req.query.page) || 1
   const limit = 6
-
+  const keyword = req.query.keyword?.trim() || ''
 
   Restaurant.findAndCountAll({
     attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description'],
-    order: sortOptions[sort],
+    where: {
+      [Op.or]: [
+        { name: { [Op.like]: `%${keyword}%` } },
+        { name_en: { [Op.like]: `%${keyword}%` } },
+        { category: { [Op.like]: `%${keyword}%` } },
+        { location: { [Op.like]: `%${keyword}%` } },
+        { phone: { [Op.like]: `%${keyword}%` } },
+        { description: { [Op.like]: `%${keyword}%` } }
+      ]
+    },
+    order: sortOptions[sort] || [],
     offset: (page - 1) * limit,
     limit,
     raw: true
@@ -29,20 +41,11 @@ router.get('/', (req, res) => {
     .then(result => {
       const restaurants = result.rows
       const totalPage = Math.ceil(result.count / limit)      
-      const keyword = req.query.keyword?.trim()
-
-      const matchedRestaurants = keyword ? restaurants.filter(restaurant =>
-        Object.values(restaurant).some(property => {
-          if (typeof property === 'string') {
-            return property.toLowerCase().includes(keyword.toLowerCase())
-          } else {
-            return false
-          }
-        })) : restaurants
-
+      
       res.render('index', {
-        restaurants: matchedRestaurants,
+        restaurants,
         keyword,
+        sort,
         prev: page > 1 ? page - 1 : page,
         next: page < totalPage ? page + 1 : page,
         page

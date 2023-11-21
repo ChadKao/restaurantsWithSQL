@@ -8,6 +8,11 @@ const session = require('express-session')
 const messageHandler = require('./middlewares/message-handler');
 const router = require('./routes');
 const errorHandler = require('./middlewares/error-handler');
+const handlebars = require('handlebars')
+
+handlebars.registerHelper('eq', (arg1, arg2) => {
+  return arg1 === arg2
+})
 
 app.engine('.hbs', engine({ extname: '.hbs' }));
 app.set('view engine', '.hbs');

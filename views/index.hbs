@@ -20,14 +20,15 @@
 
 
           <div class="col-sm-4">
-            <select name="sort" class="form-select" aria-label="Default select example" onchange="document.querySelector('form').submit()">
+            <select name="sort" class="form-select" aria-label="Default select example"
+              onchange="document.querySelector('form').submit()">
               <option selected disabled hidden value="">選擇排序方式</option>
-              <option value="ASC">依名稱(A→Z)</option>
-              <option value="DESC">依名稱(Z→A)</option>
-              <option value="category">依類別</option>
-              <option value="location">依地區</option>
-              <option value="rating_DESC">依評分(高→低)</option>
-              <option value="rating_ASC">依評分(低→高)</option>
+              <option value="ASC" {{#if (eq sort 'ASC' )}}selected{{/if}}>依名稱(A→Z)</option>
+              <option value="DESC" {{#if (eq sort 'DESC' )}}selected{{/if}}>依名稱(Z→A)</option>
+              <option value="category" {{#if (eq sort 'category' )}}selected{{/if}}>依類別</option>
+              <option value="location" {{#if (eq sort 'location' )}}selected{{/if}}>依地區</option>
+              <option value="rating_DESC" {{#if (eq sort 'rating_DESC' )}}selected{{/if}}>依評分(高→低)</option>
+              <option value="rating_ASC" {{#if (eq sort 'rating_ASC' )}}selected{{/if}}>依評分(低→高)</option>
             </select>
           </div>
         </div>
@@ -81,6 +82,8 @@
   <div class="btn-group" role="group" aria-label="Basic outlined example">
     <form action="/restaurants" method="GET" style="display: inline;">
       <input type="hidden" name="page" value="{{ prev }}">
+      <input type="hidden" name="keyword" value="{{keyword}}">
+      <input type="hidden" name="sort" value="{{sort}}">
       <button type="submit" class="btn btn-outline-primary">prev</button>
     </form>
 
@@ -88,6 +91,8 @@
 
     <form action="/restaurants" method="GET" style="display: inline;">
       <input type="hidden" name="page" value="{{ next }}">
+      <input type="hidden" name="keyword" value="{{keyword}}">
+      <input type="hidden" name="sort" value="{{sort}}">
       <button type="submit" class="btn btn-outline-primary">next</button>
     </form>
   </div>
