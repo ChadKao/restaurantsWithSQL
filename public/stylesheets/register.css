@@ -1,0 +1,175 @@
+body {
+  background-color: #fff;
+  font-family: sans-serif;
+}
+
+.container-table {
+  width: 400px;
+  margin: 0 auto;
+}
+
+.header {
+  background-color:rgb(240, 220, 130);
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+}
+
+.form-container {
+  padding: 20px;
+}
+
+.input-group {
+  margin-bottom: 10px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ccc;
+}
+
+.checkbox {
+  margin-right: 10px;
+}
+
+.submit {
+  background-color: #000;
+  color: #fff;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #000;
+}
+
+.links {
+  text-align: center;
+  margin-top: 10px;
+}
+
+a {
+  color: blue;
+  text-decoration: none;
+}
+
+header {
+  overflow: hidden;
+}
+
+.navbar .navbar-brand {
+  color: #4592af;
+}
+
+.navbar .navbar-brand:hover {
+  color: #226089;
+}
+
+.banner {
+  position: relative;
+  z-index: -1;
+  margin: -5px;
+  height: 360px;
+  background: #dddddd center center url('https://assets-lighthouse.s3.amazonaws.com/uploads/image/file/5720/restaurants-list-cover.jpg');
+  background-size: cover;
+  filter: blur(3px);
+}
+
+.search-bar .search-bar-outer {
+  margin: 0 auto;
+  max-width: 680px;
+  background-color: #fce2cf;
+  border-radius: 8px;
+  padding: 20px 30px;
+  border: 0;
+  margin-top: -60px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.search-bar .search-bar-inner h4 {
+  color: #9b4b4b;
+}
+
+.form-control::placeholder {
+  color: #aaaaaa;
+  font-size: 0.8rem;
+}
+
+.btn-major {
+  background-color: #9b4b4b;
+  color: white;
+}
+
+.form-control:focus {
+  box-shadow: none;
+  border-color: #ced4da;
+}
+
+.card {
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.card img {
+  height: 180px;
+}
+
+.card-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.restaurant-category {
+  color: #666666;
+  font-size: 0.8rem;
+}
+
+.restaurant-show-title {
+  position: relative;
+  top: -100px;
+  color: white;
+  text-align: center;
+  font-size: 3rem;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+@media screen and (max-width: 992px) {
+
+  .card img {
+    height: 115px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+
+  .restaurant-show-title {
+    font-size: 2rem;
+  }
+}
+
+@media screen and (max-width: 575px) {
+
+  .card img {
+    height: auto;
+  }
+
+}
+
+.fb-login-button {
+  background-color: #3b5998;
+  color: #fff;
+  border: 1px solid #3b5998;
+  border-radius: 10px;
+  padding: 15px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  width: 300px;
+}
+
+.fb-login-button:hover {
+  background-color: #2d4373;
+}

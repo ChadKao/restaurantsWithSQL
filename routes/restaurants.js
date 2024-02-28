@@ -7,6 +7,7 @@ const { Op } = require('sequelize');
 
 router.get('/', (req, res) => {
   const sort = req.query.sort 
+  const userId = req.user.id;
 
   const sortOptions = {
     ASC: [['name', 'ASC']],
@@ -22,7 +23,7 @@ router.get('/', (req, res) => {
   const keyword = req.query.keyword?.trim() || ''
 
   Restaurant.findAndCountAll({
-    attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description'],
+    attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description', 'userId'],
     where: {
       [Op.or]: [
         { name: { [Op.like]: `%${keyword}%` } },
@@ -31,7 +32,8 @@ router.get('/', (req, res) => {
         { location: { [Op.like]: `%${keyword}%` } },
         { phone: { [Op.like]: `%${keyword}%` } },
         { description: { [Op.like]: `%${keyword}%` } }
-      ]
+      ],
+      userId: userId
     },
     order: sortOptions[sort] || [],
     offset: (page - 1) * limit,
@@ -61,16 +63,32 @@ router.get('/new', (req, res) => {
 
 router.get('/:id', (req, res) => {
   const id = req.params.id;
+  const userId = req.user.id;
 
   Restaurant.findByPk(id, {
-    attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description'],
+    attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description', 'userId'],
     raw: true
   })
-    .then(restaurant => res.render('show', { restaurant }))
-    .catch(err => console.log(err))
+    .then(restaurant => {
+      if (!restaurant) {
+        req.flash('error', '找不到資料')
+        return res.redirect('/restaurants')
+      }
+
+      if (userId !== restaurant.userId) {
+        req.flash('error', '權限不足')
+        return res.redirect('/restaurants')
+      }
+      res.render('show', { restaurant })
+    })
+    .catch((error) => {
+      error.errorMessage = '資料取得失敗'
+      next(error)
+    })
 })
 
 router.post('/', (req, res, next) => {
+  req.body.userId = req.user.id;
   Restaurant.create(req.body)
     .then(() => {
       req.flash('success', '新增成功!')
@@ -94,27 +112,61 @@ router.get('/:id/edit', (req, res) => {
 
 router.put('/:id', (req, res, next) => {
   const id = req.params.id;
-  Restaurant.update(req.body, { where: { id } })
-    .then(() => {
-      req.flash('success', '修改成功!')
-      res.redirect(`/restaurants/${id}`)
-    })
-    .catch((error) => {
-      error.errorMessage = '修改失敗'
-      next(error)
+  const userId = req.user.id
+
+  Restaurant.findByPk(id, {
+    attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description', 'userId']
+  })
+    .then(restaurant => {
+      if (!restaurant) {
+        req.flash('error', '找不到資料')
+        return res.redirect('/restaurants')
+      }
+
+      if (userId !== restaurant.userId) {
+        req.flash('error', '權限不足')
+        return res.redirect('/restaurants')
+      }
+      
+      return restaurant.update(req.body, { where: { id } })
+        .then(() => {
+          req.flash('success', '修改成功!')
+          res.redirect(`/restaurants/${id}`)
+        })
+        .catch((error) => {
+          error.errorMessage = '修改失敗'
+          next(error)
+        })
     })
 })
 
 router.delete('/:id', (req, res, next) => {
   const id = req.params.id;
-  Restaurant.destroy({ where: { id } })
-    .then(() => {
-      req.flash('success', '刪除成功!')
-      res.redirect('/restaurants')
-    })
-    .catch((error) => {
-      error.errorMessage = '刪除失敗'
-      next(error)
+  const userId = req.user.id
+
+  Restaurant.findByPk(id, {
+    attributes: ['id', 'name', 'name_en', 'category', 'image', 'location', 'phone', 'google_map', 'rating', 'description', 'userId']
+  })
+    .then(restaurant => {
+      if (!restaurant) {
+        req.flash('error', '找不到資料')
+        return res.redirect('/restaurants')
+      }
+
+      if (userId !== restaurant.userId) {
+        req.flash('error', '權限不足')
+        return res.redirect('/restaurants')
+      }
+
+      return restaurant.destroy({ where: { id } })
+        .then(() => {
+          req.flash('success', '刪除成功!')
+          res.redirect('/restaurants')
+        })
+        .catch((error) => {
+          error.errorMessage = '刪除失敗'
+          next(error)
+        })
     })
 })
 

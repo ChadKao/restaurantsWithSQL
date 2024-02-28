@@ -14,6 +14,15 @@ handlebars.registerHelper('eq', (arg1, arg2) => {
   return arg1 === arg2
 })
 
+if (process.env.NODE_ENV === 'development') {
+  require('dotenv').config()
+}
+console.log(process.env.SESSION_SECRET)
+console.log(process.env)
+
+
+const passport = require('./config/passport')
+
 app.engine('.hbs', engine({ extname: '.hbs' }));
 app.set('view engine', '.hbs');
 app.set('views', './views');
@@ -21,11 +30,13 @@ app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 app.use(session({
-  secret: 'ThisIsSecret',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false
 }))
 app.use(flash())
+app.use(passport.initialize())
+app.use(passport.session())
 app.use(messageHandler)
 app.use(router)
 app.use(errorHandler)

@@ -23,10 +23,17 @@
             width="30" height="30" class="d-inline-block align-top" alt="好。吃">
           我的餐廳清單
         </a>
-        <a href="/restaurants/new" class="btn btn-outline-primary">新增餐廳</a>      
+        <div class="d-flex">
+          {{#if isLoggedIn}}
+          <a href="/restaurants/new" class="btn btn-outline-primary me-2">新增餐廳</a>
+          <form action="/users/logout" method="post">
+            <button type="submit" class="btn btn-outline-primary">登出</button>
+          </form>
+          {{/if}}
+        </div>
       </div>
     </nav>
-{{> message}}
+    {{> message}}
     <div class="banner"></div>
   </header>
 

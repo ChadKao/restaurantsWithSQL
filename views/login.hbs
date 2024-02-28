@@ -1,0 +1,44 @@
+<link href="/stylesheets/register.css" rel="stylesheet" />
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>登入頁面</title>
+</head>
+
+<body>
+  <div class="container-table">
+    <div class="header">
+      <h1>登入</h1>
+    </div>
+    <div class="form-container">
+      <form action="/users/login" method="post">
+        <div class="input-group">
+          <label for="email">帳號(email)：</label>
+          <input type="email" id="email" name="email" placeholder="請輸入帳號" required>
+        </div>
+        <div class="input-group">
+          <label for="password">密碼：</label>
+          <input type="password" id="password" name="password" placeholder="請輸入密碼" required>
+        </div>
+        <div class="input-group">
+          <input type="submit" value="登入">
+        </div>
+        <div class="links">
+          <span>沒有帳號？ </span>
+          <a href="/users/register">註冊新使用者</a>
+        </div>
+      </form>
+      <form action="/users/login/facebook" method="get">
+        <div class="container">
+          <button type="submit" class="fb-login-button" data-width="200" data-size="large" data-button-type="login_with"
+            data-layout="default" data-auto-logout-link="true" data-use-continue-as="true">Facebook 登入</div>
+        </button>
+      </form>
+    </div>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,53 @@
+<link href="/stylesheets/register.css" rel="stylesheet" />
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>註冊頁面</title>
+</head>
+
+<body>
+  <div class="container-table">
+    <div class="header">
+      <h1>註冊</h1>
+    </div>
+    <div class="form-container">
+      <form action="/users/register" method="post">
+        <div class="input-group">
+          <label for="name">名稱：</label>
+          <input type="text" id="name" name="name" placeholder="請輸入姓名">
+        </div>
+        <div class="input-group">
+          <label for="email">帳號(email)：</label>
+          <input type="email" id="email" name="email" placeholder="請輸入帳號" required>
+        </div>
+        <div class="input-group">
+          <label for="password">密碼：</label>
+          <input type="password" id="password" name="password" placeholder="請輸入密碼" required>
+        </div>
+        <div class="input-group">
+          <label for="password_confirmation">確認密碼：</label>
+          <input type="password" id="password_confirmation" name="confirm-password" placeholder="請再次輸入密碼" required>
+        </div>
+        <div class="input-group">
+          <input type="submit" value="確認註冊">
+        </div>
+      </form>
+      <div class="links">
+        <span>已有帳號? </span>
+        <a href="/users/login">登入</a>
+      </div>
+      <form action="/users/login/facebook" method="get">
+        <div class="container">
+          <button type="submit" class="fb-login-button" data-width="200" data-size="large" data-button-type="login_with"
+            data-layout="default" data-auto-logout-link="true" data-use-continue-as="true">Facebook 登入
+        </div>
+        </button>
+      </form>
+    </div>
+  </div>
+</body>
+
+</html>
